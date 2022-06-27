@@ -1,20 +1,15 @@
-// 예제 1
+// 간단하게 실행 가능한 함수를 불필요하게 자를 필요는 없다.
+
+// 함수 인라인 예제 1
 export function rating(driver) {
-  return moreThanFiveLateDeliveries(driver) ? 2 : 1;
+  return driver.numberOfLateDeliveries > 5 ? 2 : 1;
 }
 
-function moreThanFiveLateDeliveries(dvr) {
-  return dvr.numberOfLateDeliveries > 5;
-}
-
-// 예제 2
+// // 함수 인라인 예제 2
 function reportLines(customer) {
-  const lines = [];
-  gatherCustomerData(lines, customer);
-  return lines;
-}
+  const result = [];
+  result.push(["name", customer.name]);
+  result.push(["location", customer.location]);
 
-function gatherCustomerData(out, customer) {
-  out.push(['name', customer.name]);
-  out.push(['location', customer.location]);
+  return result;
 }
