@@ -1,14 +1,10 @@
 export function printOwing(invoice) {
-  // 01. 배너 출력
   printBanner();
 
-  // 02. 합산
   const outstanding = calculateOutstanding(invoice);
 
-  // 03. 마감일 계산
   calculateDueDate(invoice);
 
-  // 04. 화면 출력
   displayInvoice(invoice, outstanding);
 }
 
