@@ -1,24 +1,37 @@
 export function printOwing(invoice) {
-  let outstanding = 0;
+  // 01. 배너 출력
+  printBanner();
 
-  console.log('***********************');
-  console.log('**** Customer Owes ****');
-  console.log('***********************');
+  // 02. 합산
+  const outstanding = calculateOutstanding(invoice);
 
-  // calculate outstanding
-  for (const o of invoice.orders) {
-    outstanding += o.amount;
-  }
+  // 03. 마감일 계산
+  calculateDueDate(invoice);
 
-  // record due date
+  // 04. 화면 출력
+  displayInvoice(invoice, outstanding);
+}
+
+function printBanner() {
+  console.log("***********************");
+  console.log("**** Customer Owes ****");
+  console.log("***********************");
+}
+
+function calculateOutstanding(invoice) {
+  return invoice.orders.reduce((sum, value) => sum + value.amount, 0);
+}
+
+function calculateDueDate(invoice) {
   const today = new Date();
   invoice.dueDate = new Date(
     today.getFullYear(),
     today.getMonth(),
     today.getDate() + 30
   );
+}
 
-  //print details
+function displayInvoice(invoice, outstanding) {
   console.log(`name: ${invoice.customer}`);
   console.log(`amount: ${outstanding}`);
   console.log(`due: ${invoice.dueDate.toLocaleDateString()}`);
@@ -26,6 +39,7 @@ export function printOwing(invoice) {
 
 const invoice = {
   orders: [{ amount: 2 }, { amount: 5 }],
-  customer: '엘리',
+  customer: "엘리",
 };
+
 printOwing(invoice);
