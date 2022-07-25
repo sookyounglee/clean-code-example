@@ -1,3 +1,6 @@
+/**
+ * 참조를 값으로 바꾸기 예제
+ */
 class Person {
   #name;
   #telephoneNumber;
@@ -15,6 +18,8 @@ class Person {
   }
 
   get telephoneNumber() {
+    // instance를 바로 return하는건 좋지 않다.
+    // 언제든지 값을 변경 가능하기때문에 불변성을 유지할 수 없다.
     return this.#telephoneNumber.toString;
   }
 
@@ -23,7 +28,9 @@ class Person {
   }
 
   set officeAreaCode(value) {
-    this.#telephoneNumber.areaCode = value;
+    // this.#telephoneNumber.areaCode = value; (기존 코드)
+    // 새로운 객체를 return해서 불변성을 유지시켜준다.
+    this.#telephoneNumber = new TelephoneNumber(value, this.officeNumber);
   }
 
   get officeNumber() {
@@ -31,7 +38,9 @@ class Person {
   }
 
   set officeNumber(value) {
-    this.#telephoneNumber.number = value;
+    // this.#telephoneNumber.number = value; (기존 코드)
+    // 새로운 객체를 return해서 불변성을 유지시켜준다.
+    this.#telephoneNumber = new TelephoneNumber(this.officeAreaCode, value);
   }
 }
 
@@ -62,7 +71,7 @@ class TelephoneNumber {
   }
 }
 
-const person = new Person('엘리', '010', '12345678');
+const person = new Person("엘리", "010", "12345678");
 console.log(person.name);
 console.log(person.officeAreaCode);
 console.log(person.officeNumber);
